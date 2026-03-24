@@ -5,11 +5,11 @@ This allows gunicorn to find the app from the project root.
 import sys
 from pathlib import Path
 
-# Add ambulance_ucs to path so we can import from it
-sys.path.insert(0, str(Path(__file__).parent / "ambulance_ucs"))
+# Add project root to path (parent of this file)
+sys.path.insert(0, str(Path(__file__).parent))
 
-# Import the Flask app
-from app import app
+# Import the Flask app from ambulance_ucs package
+from ambulance_ucs.app import app
 
 if __name__ == "__main__":
     app.run()
