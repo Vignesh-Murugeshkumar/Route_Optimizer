@@ -1,8 +1,8 @@
 import os
 from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
-from ucs import uniform_cost_search
-from graph import NODES, EDGES, build_graph, refresh_graph, get_route_geometry
+from .ucs import uniform_cost_search
+from .graph import NODES, EDGES, build_graph, refresh_graph, get_route_geometry
 
 app = Flask(__name__)
 CORS(app)
