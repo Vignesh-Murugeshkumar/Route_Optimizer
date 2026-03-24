@@ -1,3 +1,4 @@
+import os
 from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
 from ucs import uniform_cost_search
@@ -84,5 +85,5 @@ def api_graph_refresh():
         return jsonify({"success": False, "error": str(e)}), 503
 
 
-if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=int(os.getenv("PORT", 5000)), debug=False)
