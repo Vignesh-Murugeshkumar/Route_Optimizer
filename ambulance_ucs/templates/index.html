@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambulance Route Optimization - UCS Algorithm</title>
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Control Panel (Left) -->
+        <div class="control-panel">
+            <h1>Ambulance Route Optimizer</h1>
+            <p class="subtitle">UCS Algorithm with Real Road Data</p>
+            
+            <!-- Controls -->
+            <div class="control-section">
+                <label for="start-node">Emergency Location:</label>
+                <select id="start-node">
+                    <option value="">Select incident...</option>
+                </select>
+                
+                <label for="goal-node">Destination Hospital:</label>
+                <select id="goal-node">
+                    <option value="">Select hospital...</option>
+                </select>
+                
+                <div class="button-group">
+                    <button id="btn-run" class="btn btn-primary">Run UCS</button>
+                    <button id="btn-step" class="btn btn-secondary" disabled>Step</button>
+                    <button id="btn-reset" class="btn btn-secondary" disabled>Reset</button>
+                    <button id="btn-random" class="btn btn-secondary">Random Emergency</button>
+                </div>
+            </div>
+            
+            <!-- Stats Panel -->
+            <div class="control-section">
+                <h3>Route Statistics</h3>
+                <div class="stats-box">
+                    <div class="stat-item">
+                        <span class="stat-label">Optimal Route:</span>
+                        <span class="stat-value" id="stat-path">—</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Travel Time:</span>
+                        <span class="stat-value" id="stat-time">—</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Nodes Explored:</span>
+                        <span class="stat-value" id="stat-explored">0 / 12</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Priority Queue:</span>
+                        <div class="priority-queue" id="priority-queue">
+                            <em>Queue empty</em>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step Log -->
+            <div class="control-section">
+                <h3>Expansion Log</h3>
+                <div class="step-log" id="step-log">
+                    <p><em>No algorithm run yet</em></p>
+                </div>
+            </div>
+            
+            <!-- Loading Spinner -->
+            <div class="spinner hidden" id="spinner">
+                <div class="spin"></div>
+                <p>Loading graph from OSRM...</p>
+            </div>
+            
+            <!-- Error Toast -->
+            <div class="toast hidden" id="error-toast">
+                <span id="toast-message"></span>
+            </div>
+        </div>
+        
+        <!-- Map (Right) -->
+        <div class="map-container">
+            <div id="map"></div>
+        </div>
+    </div>
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    <!-- Custom JS -->
+    <script>
+        // Data passed from Flask
+        const appData = {
+            nodes: {},
+            edges: [],
+            graph: {},
+            loading: false
+        };
+    </script>
+    
+    <script src="{{ url_for('static', filename='map.js') }}"></script>
+</body>
+</html>
